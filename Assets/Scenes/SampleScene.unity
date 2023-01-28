@@ -442,7 +442,7 @@ GameObject:
   - component: {fileID: 731377662}
   - component: {fileID: 731377661}
   m_Layer: 0
-  m_Name: Cylinder
+  m_Name: Column
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -897,6 +897,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2139241796, guid: 1e4c5029ec9a83c478ca9f73869d4e7b, type: 3}
+      propertyPath: _moveSpeed
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 352380949796281119, guid: 1e4c5029ec9a83c478ca9f73869d4e7b, type: 3}
       propertyPath: m_Name
       value: Player
@@ -945,25 +949,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6732404331171731406, guid: 1e4c5029ec9a83c478ca9f73869d4e7b, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6732404331171731406, guid: 1e4c5029ec9a83c478ca9f73869d4e7b, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 6732404331171731406, guid: 1e4c5029ec9a83c478ca9f73869d4e7b, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6732404331171731406, guid: 1e4c5029ec9a83c478ca9f73869d4e7b, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e4c5029ec9a83c478ca9f73869d4e7b, type: 3}
---- !u!1 &2139241789 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 352380949796281119, guid: 1e4c5029ec9a83c478ca9f73869d4e7b, type: 3}
-  m_PrefabInstance: {fileID: 2110845047}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2139241794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2139241789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5985b426ca4fd6e4595aef588f0afd08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &5626893438988147660
 PrefabInstance:
   m_ObjectHideFlags: 0

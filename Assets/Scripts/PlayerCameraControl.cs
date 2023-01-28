@@ -13,14 +13,14 @@ public class PlayerCameraControl : MonoBehaviour
     private void Update()
     {
         if (_input.MoveDelta != Vector2.zero)
-            MoveCamera(_input.MoveDelta);
+            MoveCamera(_input.MoveDelta, _cameraPivot, _sensivity, _minVerticalAngle, _maxVerticalAngle);
     }
 
-    private void MoveCamera(Vector2 moveDelta)
+    private void MoveCamera(Vector2 moveDelta, Transform pivot, float moveSpeed, float minVerticalAngle, float maxVerticalAngle)
     {
-        _cameraPivot.Rotate(new Vector3(-moveDelta.y, moveDelta.x, 0) * Time.deltaTime * _sensivity);
-        float clampedEulerX = Mathf.Clamp(TryGetNegativeAngle(_cameraPivot.localEulerAngles.x), _minVerticalAngle, _maxVerticalAngle);
-        _cameraPivot.localEulerAngles = new Vector3(clampedEulerX, _cameraPivot.localEulerAngles.y, 0);
+        pivot.Rotate(new Vector3(-moveDelta.y, moveDelta.x, 0) * Time.deltaTime * moveSpeed);
+        float clampedEulerX = Mathf.Clamp(TryGetNegativeAngle(pivot.localEulerAngles.x), minVerticalAngle, maxVerticalAngle);
+        pivot.localEulerAngles = new Vector3(clampedEulerX, pivot.localEulerAngles.y, 0);
     }
 
     private float TryGetNegativeAngle(float angle)
