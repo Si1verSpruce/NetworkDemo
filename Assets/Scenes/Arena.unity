@@ -219,6 +219,7 @@ GameObject:
   m_Component:
   - component: {fileID: 339595233}
   - component: {fileID: 339595232}
+  - component: {fileID: 339595235}
   - component: {fileID: 339595234}
   m_Layer: 0
   m_Name: NetworkManager
@@ -246,11 +247,11 @@ MonoBehaviour:
   sendRate: 30
   offlineScene: 
   onlineScene: 
-  transport: {fileID: 0}
+  transport: {fileID: 339595235}
   networkAddress: localhost
   maxConnections: 4
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 0}
+  playerPrefab: {fileID: 352380949796281119, guid: 1e4c5029ec9a83c478ca9f73869d4e7b, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs: []
@@ -284,6 +285,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offsetX: 0
   offsetY: 0
+--- !u!114 &339595235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 339595231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7424c1070fad4ba2a7a96b02fbeb4bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  port: 7777
+  NoDelay: 1
+  SendTimeout: 5000
+  ReceiveTimeout: 30000
+  serverMaxMessageSize: 16384
+  serverMaxReceivesPerTick: 10000
+  serverSendQueueLimitPerConnection: 10000
+  serverReceiveQueueLimitPerConnection: 10000
+  clientMaxMessageSize: 16384
+  clientMaxReceivesPerTick: 1000
+  clientSendQueueLimit: 10000
+  clientReceiveQueueLimit: 10000
 --- !u!1 &347090109
 GameObject:
   m_ObjectHideFlags: 0
@@ -1516,15 +1541,7 @@ MonoBehaviour:
   - {fileID: 88341526}
   - {fileID: 1396936751}
   - {fileID: 819585730}
-  _spawnedPlayer: {fileID: 917968867081693956, guid: 1e4c5029ec9a83c478ca9f73869d4e7b, type: 3}
-  _playerCount: 4
-  _playersContainer: {fileID: 1133712315}
   _lookAtObject: {fileID: 731377660}
-  _playerColors:
-  - {r: 0, g: 0.4745098, b: 1, a: 0}
-  - {r: 1, g: 0.14877309, b: 0, a: 0}
-  - {r: 0.55522346, g: 0, b: 1, a: 0}
-  - {r: 0.8584906, g: 0.5626501, b: 0.16602883, a: 0}
 --- !u!4 &1095377140
 Transform:
   m_ObjectHideFlags: 0

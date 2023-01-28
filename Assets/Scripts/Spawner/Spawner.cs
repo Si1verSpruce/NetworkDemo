@@ -6,25 +6,18 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private SpawnPoint[] _spawnPoints;
-    [SerializeField] private Player _spawnedPlayer;
-    [SerializeField] private int _playerCount;
-    [SerializeField] private Transform _playersContainer;
     [SerializeField] private Transform _lookAtObject;
-    [SerializeField] private Color[] _playerColors;
 
-    public void Spawn()
+    public void Spawn(Player[] players)
     {
         List<SpawnPoint> availableSpawnPoints = _spawnPoints.ToList();
-        List<Color> availableColors = _playerColors.ToList();
 
-        for (int i = 0; i < _playerCount; i++)
+        for (int i = 0; i < players.Length; i++)
         {
             int spawnPointIndex = Random.Range(0, availableSpawnPoints.Count);
-            int colorIndex = Random.Range(0, availableColors.Count);
-            Quaternion spawnedPlayerRotation = GetSpawnedPlayerRotation(availableSpawnPoints[spawnPointIndex].transform, _lookAtObject);
-            availableSpawnPoints[spawnPointIndex].Spawn(_spawnedPlayer, spawnedPlayerRotation, _playersContainer, availableColors[colorIndex]);
+            players[i].transform.position = availableSpawnPoints[spawnPointIndex].transform.position;
+            players[i].transform.rotation = GetSpawnedPlayerRotation(availableSpawnPoints[spawnPointIndex].transform, _lookAtObject);
             availableSpawnPoints.Remove(availableSpawnPoints[spawnPointIndex]);
-            availableColors.Remove(availableColors[colorIndex]);
         }
     }
 
