@@ -8,10 +8,11 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private PlayerInput _input;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private Transform _cameraPivot;
+    [SerializeField] private PlayerDash _dash;
 
     private Rigidbody _rigidbody;
     private float _velocity;
-    private bool _isMoving;
+    private bool _isDashActive;
 
     private void Awake()
     {
@@ -20,12 +21,25 @@ public class PlayerMove : MonoBehaviour
         _velocity = MoveSpeedMultiplier.MultiplyMoveSpeedToVelocity(_moveSpeed);
     }
 
+    private void OnEnable()
+    {
+        _dash.DashActivityChanged += OnDashActivityChanged;
+    }
+
+    private void OnDisable()
+    {
+        _dash.DashActivityChanged -= OnDashActivityChanged;
+    }
+
     private void FixedUpdate()
     {
-        if (_input.MoveDirection != Vector2.zero)
-            Move(_input.MoveDirection, _cameraPivot, _velocity);
-        else
-            _rigidbody.velocity = Vector3.zero;
+        if (_isDashActive == false)
+        {
+            if (_input.MoveDirection != Vector2.zero)
+                Move(_input.MoveDirection, _cameraPivot, _velocity);
+            else
+                _rigidbody.velocity = Vector3.zero;
+        }
     }
 
     private void Move(Vector2 moveDelta, Transform pivot, float velocity)
@@ -33,5 +47,10 @@ public class PlayerMove : MonoBehaviour
         Vector3 pivotForward = new Vector3(pivot.forward.x, 0, pivot.forward.z);
         Vector3 pivotRight = new Vector3(pivot.right.x, 0, pivot.right.z);
         _rigidbody.velocity = (pivotForward * moveDelta.y + pivotRight * moveDelta.x) * velocity * Time.deltaTime;
+    }
+
+    private void OnDashActivityChanged(bool isActive)
+    {
+        _isDashActive = isActive;
     }
 }

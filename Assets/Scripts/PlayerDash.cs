@@ -1,25 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerDash : MonoBehaviour
 {
     [SerializeField] private PlayerInput _input;
     [SerializeField] private float _distance;
-    [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _duration;
     [SerializeField] private Transform _cameraPivot;
 
     private Rigidbody _rigidbody;
     private bool _isDashAvailable = true;
-    private bool _isNotCollided;
-    private float _velocity;
+
+    public event UnityAction<bool> DashActivityChanged;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
-
-        _velocity = MoveSpeedMultiplier.MultiplyMoveSpeedToVelocity(_moveSpeed);
     }
 
     private void OnEnable()
@@ -35,36 +34,28 @@ public class PlayerDash : MonoBehaviour
     private void TryToDash()
     {
         if (_isDashAvailable)
-            StartCoroutine(Dash(_rigidbody.velocity.normalized, _distance, _velocity));
+            StartCoroutine(Dash(_rigidbody.velocity.normalized, _distance, _duration));
     }
 
-    private IEnumerator Dash(Vector3 direction, float distance, float velocity)
+    private IEnumerator Dash(Vector3 direction, float distance, float duration)
     {
+        DashActivityChanged?.Invoke(true);
         _isDashAvailable = false;
-        _isNotCollided = true;
-        Vector3 targetPosition;
+        float velocity = distance / duration;
 
         if (direction == Vector3.zero)
             direction = new Vector3(_cameraPivot.forward.x, 0, _cameraPivot.forward.z);
 
-        targetPosition = transform.position + direction * distance;
-
-        Debug.Log(direction);
-        Debug.Log(velocity);
-
-        while (transform.position != targetPosition && _isNotCollided)
+        while (duration > 0)
         {
-            //transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-            _rigidbody.velocity = direction * velocity * Time.deltaTime;
+            _rigidbody.velocity = direction * velocity;
 
             yield return null;
+
+            duration -= Time.deltaTime;
         }
 
+        DashActivityChanged?.Invoke(false);
         _isDashAvailable = true;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        _isNotCollided = false;
     }
 }
