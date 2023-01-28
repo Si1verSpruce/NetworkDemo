@@ -9,10 +9,13 @@ public class PlayerDash : MonoBehaviour
     [SerializeField] private PlayerInput _input;
     [SerializeField] private float _distance;
     [SerializeField] private float _duration;
+    [SerializeField] private float _cooldown;
     [SerializeField] private Transform _cameraPivot;
+    [SerializeField] private Player _player;
 
     private Rigidbody _rigidbody;
     private bool _isDashAvailable = true;
+    private bool _isDashing;
 
     public event UnityAction<bool> DashActivityChanged;
 
@@ -41,6 +44,8 @@ public class PlayerDash : MonoBehaviour
     {
         DashActivityChanged?.Invoke(true);
         _isDashAvailable = false;
+        _isDashing = true;
+        _rigidbody.velocity = Vector3.zero;
         float velocity = distance / duration;
 
         if (direction == Vector3.zero)
@@ -55,7 +60,24 @@ public class PlayerDash : MonoBehaviour
             duration -= Time.deltaTime;
         }
 
+        _isDashing = false;
         DashActivityChanged?.Invoke(false);
+        StartCoroutine(CountCooldown(_cooldown));
+    }
+
+    private IEnumerator CountCooldown(float cooldown)
+    {
+        yield return new WaitForSeconds(cooldown);
+
         _isDashAvailable = true;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (_isDashing)
+        {
+            if (collision.gameObject.TryGetComponent(out Player player))
+                player.ApplyColor(_player.ThisColor);
+        }
     }
 }
