@@ -923,7 +923,7 @@ MonoBehaviour:
   _spawnedGameObject: {fileID: 352380949796281119, guid: 1e4c5029ec9a83c478ca9f73869d4e7b, type: 3}
   _gameObjectsCount: 4
   _playersContainer: {fileID: 1133712315}
-  _lookAtGameObject: {fileID: 0}
+  _lookAtObject: {fileID: 731377660}
 --- !u!4 &1095377140
 Transform:
   m_ObjectHideFlags: 0
