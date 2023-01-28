@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class SpawnPoint : MonoBehaviour
 {
-    public void Spawn(GameObject spawnedGameObject, Quaternion rotation, Transform parent)
+    public void Spawn(Player spawnedPlayer, Quaternion rotation, Transform parent, Color color)
     {
-        Instantiate(spawnedGameObject, transform.position, rotation, parent);
+        Player player = Instantiate(spawnedPlayer, transform.position, rotation, parent);
+        player.Init(color);
     }
 }
