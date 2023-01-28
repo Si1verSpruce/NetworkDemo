@@ -12,22 +12,17 @@ public class Spawner : MonoBehaviour
     [SerializeField] private Transform _lookAtObject;
     [SerializeField] private Color[] _playerColors;
 
-    private void Awake()
+    public void Spawn()
     {
-        Spawn(_spawnPoints, _spawnedPlayer, _playerCount, _playerColors);
-    }
+        List<SpawnPoint> availableSpawnPoints = _spawnPoints.ToList();
+        List<Color> availableColors = _playerColors.ToList();
 
-    private void Spawn(SpawnPoint[] spawnPoints, Player spawnedPlayer, int playerCount, Color[] colors)
-    {
-        List<SpawnPoint> availableSpawnPoints = spawnPoints.ToList();
-        List<Color> availableColors = colors.ToList();
-
-        for (int i = 0; i < playerCount; i++)
+        for (int i = 0; i < _playerCount; i++)
         {
             int spawnPointIndex = Random.Range(0, availableSpawnPoints.Count);
             int colorIndex = Random.Range(0, availableColors.Count);
             Quaternion spawnedPlayerRotation = GetSpawnedPlayerRotation(availableSpawnPoints[spawnPointIndex].transform, _lookAtObject);
-            availableSpawnPoints[spawnPointIndex].Spawn(spawnedPlayer, spawnedPlayerRotation, _playersContainer, availableColors[colorIndex]);
+            availableSpawnPoints[spawnPointIndex].Spawn(_spawnedPlayer, spawnedPlayerRotation, _playersContainer, availableColors[colorIndex]);
             availableSpawnPoints.Remove(availableSpawnPoints[spawnPointIndex]);
             availableColors.Remove(availableColors[colorIndex]);
         }
