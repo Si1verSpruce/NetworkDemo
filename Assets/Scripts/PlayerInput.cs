@@ -6,13 +6,13 @@ using UnityEngine.Events;
 public class PlayerInput : MonoBehaviour
 {
     private PlayerInputActions _input;
-    private Vector2 _mouseDelta;
-    private Vector2 _movementDirection;
+    private Vector2 _lookDelta;
+    private Vector2 _moveDirection;
 
     public event UnityAction DashInputted;
 
-    public Vector2 MouseDelta => _mouseDelta;
-    public Vector2 MovementDirection => _movementDirection;
+    public Vector2 MoveDelta => _lookDelta;
+    public Vector2 MoveDirection => _moveDirection;
 
     private void Awake()
     {
@@ -35,13 +35,12 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        _mouseDelta = _input.Player.Look.ReadValue<Vector2>();
-        _movementDirection = _input.Player.Move.ReadValue<Vector2>();
+        _lookDelta = _input.Player.Look.ReadValue<Vector2>();
+        _moveDirection = _input.Player.Move.ReadValue<Vector2>();
     }
 
     public void OnDashInput()
     {
-        Debug.Log("dash!");
         DashInputted?.Invoke();
     }
 }
