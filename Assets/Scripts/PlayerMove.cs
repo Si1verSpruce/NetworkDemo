@@ -10,24 +10,28 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private Transform _cameraPivot;
 
     private Rigidbody _rigidbody;
+    private float _velocity;
+    private bool _isMoving;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+
+        _velocity = MoveSpeedMultiplier.MultiplyMoveSpeedToVelocity(_moveSpeed);
     }
 
     private void FixedUpdate()
     {
         if (_input.MoveDirection != Vector2.zero)
-            Move(_input.MoveDirection, _cameraPivot, _moveSpeed);
+            Move(_input.MoveDirection, _cameraPivot, _velocity);
         else
-            _rigidbody.velocity = Vector2.zero;
+            _rigidbody.velocity = Vector3.zero;
     }
 
-    private void Move(Vector2 moveDelta, Transform pivot, float moveSpeed)
+    private void Move(Vector2 moveDelta, Transform pivot, float velocity)
     {
         Vector3 pivotForward = new Vector3(pivot.forward.x, 0, pivot.forward.z);
         Vector3 pivotRight = new Vector3(pivot.right.x, 0, pivot.right.z);
-        _rigidbody.velocity = (pivotForward * moveDelta.y + pivotRight * moveDelta.x) * moveSpeed * Time.deltaTime;
+        _rigidbody.velocity = (pivotForward * moveDelta.y + pivotRight * moveDelta.x) * velocity * Time.deltaTime;
     }
 }
