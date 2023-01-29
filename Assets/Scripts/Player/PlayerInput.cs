@@ -20,11 +20,6 @@ public class PlayerInput : NetworkBehaviour
         _input = new PlayerInputActions();
     }
 
-    public override void OnStartClient()
-    {
-
-    }
-
     private void OnEnable()
     {
         _input.Enable();

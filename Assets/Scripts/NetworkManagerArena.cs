@@ -1,23 +1,23 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
 using UnityEngine.Events;
 
 public class NetworkManagerArena : NetworkManager
 {
-    [SerializeField] private Transform _playersContainer;
+    public event UnityAction<NetworkConnectionToClient> PlayerConnected;
+    public event UnityAction<NetworkConnectionToClient> PlayerDisconnected;
 
-    public override void OnServerAddPlayer(NetworkConnectionToClient connection)
+    public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
-        GameObject player = Instantiate(playerPrefab, _playersContainer);
-        NetworkServer.AddPlayerForConnection(connection, player);
+        base.OnServerAddPlayer(conn);
+        PlayerConnected?.Invoke(conn);
+    }
 
-        // spawn ball if two players
-        /*if (numPlayers == 2)
-        {
-            ball = Instantiate(spawnPrefabs.Find(prefab => prefab.name == "Ball"));
-            NetworkServer.Spawn(ball);
-        }*/
+    public override void OnServerDisconnect(NetworkConnectionToClient conn)
+    {
+        PlayerDisconnected?.Invoke(conn);
+        base.OnServerDisconnect(conn);
     }
 }

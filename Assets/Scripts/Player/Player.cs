@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Renderer))]
-public class Player : MonoBehaviour
+public class Player : NetworkBehaviour
 {
     [SerializeField] private float _setYourColorDelay;
 
     private Renderer _renderer;
+    private string _name;
     private Color _color;
     private bool _isRecolorInvulnerable;
-    private bool _isColorSet;
+    private bool _isNotInitialized = true;
 
+    public string Name => _name;
     public Color ThisColor => _color;
 
     private void Awake()
@@ -20,13 +22,14 @@ public class Player : MonoBehaviour
         _renderer = GetComponent<Renderer>();
     }
 
-    public void Init(Color color)
+    public void Init(string name, Color color)
     {
-        if (_isColorSet == false)
+        if (_isNotInitialized)
         {
+            _name = name;
             _renderer.material.color = color;
             _color = _renderer.material.color;
-            _isColorSet = true;
+            _isNotInitialized = true;
         }
     }
 

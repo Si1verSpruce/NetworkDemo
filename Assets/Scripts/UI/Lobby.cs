@@ -2,33 +2,70 @@ using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Lobby : NetworkBehaviour
 {
-    [SerializeField] private Button _start;
+    [SerializeField] private NetworkManagerArena _networkManager;
+    [SerializeField] private Color[] _playerColors;
+    [SerializeField] private string[] _playerNames;
+    [SerializeField] private PlayerInfoView _view;
+    [SerializeField] private Transform _viewsContainer;
+
+    private List<Player> _players = new List<Player>();
+    private Dictionary<Player, PlayerInfoView> _views = new Dictionary<Player, PlayerInfoView>();
 
     private void OnEnable()
     {
-        Debug.Log("start");
-        if (isServer)
-        {
-            Debug.Log("server");
-            _start.gameObject.SetActive(true);
-        }
-
-        Time.timeScale = 0;
-
-        _start.onClick.AddListener(UnpauseGame);
+        _networkManager.PlayerConnected += OnPlayerConnected;
+        _networkManager.PlayerDisconnected += OnPlayerDisconnected;
     }
 
     private void OnDisable()
     {
-        _start.onClick.RemoveListener(UnpauseGame);
+        _networkManager.PlayerConnected -= OnPlayerConnected;
+        _networkManager.PlayerDisconnected -= OnPlayerDisconnected;
     }
 
-    private void UnpauseGame()
+    private void OnPlayerConnected(NetworkConnectionToClient connection)
     {
-        Time.timeScale = 1;
+        foreach (var owned in connection.owned)
+        {
+            if (owned.TryGetComponent(out Player player))
+            {
+                InitPlayer(player);
+                InitPlayerInfoView(player);
+            }
+        }
+    }
+
+    private void InitPlayer(Player player)
+    {
+        _players.Add(player);
+        player.Init(_playerNames[_players.Count - 1], _playerColors[_players.Count - 1]);
+    }
+
+    private void InitPlayerInfoView(Player player)
+    {
+        var view = Instantiate(_view, _viewsContainer);
+        _views[player] = view;
+        view.Init(player);
+    }
+
+    private void OnPlayerDisconnected(NetworkConnectionToClient connection)
+    {
+        foreach (var owned in connection.owned)
+        {
+            if (owned.TryGetComponent(out Player player))
+            {
+                if (_players.Contains(player))
+                    _players.Remove(player);
+
+                if (_views.TryGetValue(player, out PlayerInfoView view))
+                {
+                    _views.Remove(player);
+                    Destroy(view.gameObject);
+                }
+            }
+        }
     }
 }
