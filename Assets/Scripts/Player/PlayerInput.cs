@@ -20,6 +20,11 @@ public class PlayerInput : NetworkBehaviour
         _input = new PlayerInputActions();
     }
 
+    public override void OnStartClient()
+    {
+
+    }
+
     private void OnEnable()
     {
         _input.Enable();
@@ -36,7 +41,7 @@ public class PlayerInput : NetworkBehaviour
 
     private void Update()
     {
-        if (isLocalPlayer)
+        if (isOwned)
         {
             _lookDelta = _input.Player.Look.ReadValue<Vector2>();
             _moveDirection = _input.Player.Move.ReadValue<Vector2>();
@@ -45,7 +50,7 @@ public class PlayerInput : NetworkBehaviour
 
     public void OnDashInput()
     {
-        if (isLocalPlayer)
+        if (isOwned)
             DashInputted?.Invoke();
     }
 }

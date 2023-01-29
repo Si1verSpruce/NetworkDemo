@@ -37,13 +37,10 @@ public class PlayerMove : NetworkBehaviour
         if (_isDashActive)
             return;
 
-        if (isLocalPlayer)
-        {
-            if (_input.MoveDirection != Vector2.zero)
-                Move(_input.MoveDirection, _cameraPivot, _velocity);
-            else
-                _rigidbody.velocity = Vector3.zero;
-        }
+        if (_input.MoveDirection != Vector2.zero)
+            Move(_input.MoveDirection, _cameraPivot, _velocity);
+        else
+            _rigidbody.velocity = Vector3.zero;
     }
 
     private void Move(Vector2 moveDelta, Transform pivot, float velocity)

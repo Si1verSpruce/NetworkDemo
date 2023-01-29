@@ -37,7 +37,7 @@ public class PlayerDash : NetworkBehaviour
 
     private void TryToDash()
     {
-        if (isLocalPlayer && _isDashAvailable)
+        if (_isDashAvailable)
             StartCoroutine(Dash(_rigidbody.velocity.normalized, _distance, _duration));
     }
 

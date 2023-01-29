@@ -164,8 +164,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e34eb0cdf8126f4e86d65d7792f6d7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0.1
   _input: {fileID: 2139241794}
   _cameraPivot: {fileID: 4286952719423903462}
+  _camera: {fileID: 0}
   _minVerticalAngle: -20
   _maxVerticalAngle: 50
   _sensivity: 10
@@ -181,6 +185,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f28bb4c04d00fd041bc514f2a058a973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0.1
   _input: {fileID: 2139241794}
   _moveSpeed: 8
   _cameraPivot: {fileID: 4286952719423903462}
@@ -197,6 +204,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf2a196ded3167f4c914c7ae94c33fc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0.1
   _input: {fileID: 2139241794}
   _distance: 10
   _duration: 0.2
@@ -232,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3ba0becae47b8b9381191598957c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
+  syncDirection: 1
   syncMode: 0
   syncInterval: 0
   target: {fileID: 3409997175711378727}
