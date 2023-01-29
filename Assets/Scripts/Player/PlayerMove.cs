@@ -1,9 +1,10 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerMove : MonoBehaviour
+public class PlayerMove : NetworkBehaviour
 {
     [SerializeField] private PlayerInput _input;
     [SerializeField] private float _moveSpeed;
@@ -33,7 +34,10 @@ public class PlayerMove : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_isDashActive == false)
+        if (_isDashActive)
+            return;
+
+        if (isLocalPlayer)
         {
             if (_input.MoveDirection != Vector2.zero)
                 Move(_input.MoveDirection, _cameraPivot, _velocity);

@@ -1,9 +1,10 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerInput : MonoBehaviour
+public class PlayerInput : NetworkBehaviour
 {
     private PlayerInputActions _input;
     private Vector2 _lookDelta;
@@ -35,12 +36,16 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        _lookDelta = _input.Player.Look.ReadValue<Vector2>();
-        _moveDirection = _input.Player.Move.ReadValue<Vector2>();
+        if (isLocalPlayer)
+        {
+            _lookDelta = _input.Player.Look.ReadValue<Vector2>();
+            _moveDirection = _input.Player.Move.ReadValue<Vector2>();
+        }
     }
 
     public void OnDashInput()
     {
-        DashInputted?.Invoke();
+        if (isLocalPlayer)
+            DashInputted?.Invoke();
     }
 }

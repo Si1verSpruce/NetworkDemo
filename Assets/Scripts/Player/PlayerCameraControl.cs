@@ -1,11 +1,13 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCameraControl : MonoBehaviour
+public class PlayerCameraControl : NetworkBehaviour
 {
     [SerializeField] private PlayerInput _input;
     [SerializeField] private Transform _cameraPivot;
+    [SerializeField] private Camera _camera;
     [SerializeField, Range(-180, 180)] private float _minVerticalAngle;
     [SerializeField, Range(-180, 180)] private float _maxVerticalAngle;
     [SerializeField] private float _sensivity;

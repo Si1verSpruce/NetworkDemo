@@ -1,10 +1,11 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerDash : MonoBehaviour
+public class PlayerDash : NetworkBehaviour
 {
     [SerializeField] private PlayerInput _input;
     [SerializeField] private float _distance;
@@ -36,7 +37,7 @@ public class PlayerDash : MonoBehaviour
 
     private void TryToDash()
     {
-        if (_isDashAvailable)
+        if (isLocalPlayer && _isDashAvailable)
             StartCoroutine(Dash(_rigidbody.velocity.normalized, _distance, _duration));
     }
 

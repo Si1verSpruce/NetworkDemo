@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Renderer))]
-public class Player : NetworkBehaviour
+public class Player : MonoBehaviour
 {
     [SerializeField] private float _setYourColorDelay;
 
