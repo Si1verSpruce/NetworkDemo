@@ -1,6 +1,7 @@
 using Mirror;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerCameraControl : NetworkBehaviour
@@ -19,6 +20,11 @@ public class PlayerCameraControl : NetworkBehaviour
             MoveCamera(_input.MoveDelta, _cameraPivot, _sensivity, _minVerticalAngle, _maxVerticalAngle);
             LookAtSameWithPivotDirection(_cameraPivot);
         }
+    }
+
+    public override void OnStartAuthority()
+    {
+        _camera.enabled = true;
     }
 
     private void MoveCamera(Vector2 moveDelta, Transform pivot, float moveSpeed, float minVerticalAngle, float maxVerticalAngle)
