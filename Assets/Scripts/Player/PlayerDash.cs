@@ -78,7 +78,7 @@ public class PlayerDash : NetworkBehaviour
         if (_isDashing)
         {
             if (collision.gameObject.TryGetComponent(out Player player))
-                player.ApplyColor(_player.ThisColor);
+                player.ApplyColor(_player.ThisColor, _player);
         }
     }
 }

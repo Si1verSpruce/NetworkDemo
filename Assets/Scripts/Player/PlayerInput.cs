@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class PlayerInput : NetworkBehaviour
 {
     private PlayerInputActions _input;
     private Vector2 _lookDelta;
     private Vector2 _moveDirection;
+    private bool _isOverUI;
 
     public event UnityAction DashInputted;
 
@@ -38,6 +41,7 @@ public class PlayerInput : NetworkBehaviour
     {
         if (isOwned)
         {
+            _isOverUI = EventSystem.current.IsPointerOverGameObject();
             _lookDelta = _input.Player.Look.ReadValue<Vector2>();
             _moveDirection = _input.Player.Move.ReadValue<Vector2>();
         }
@@ -45,7 +49,7 @@ public class PlayerInput : NetworkBehaviour
 
     public void OnDashInput()
     {
-        if (isOwned)
+        if (isOwned && _isOverUI == false)
             DashInputted?.Invoke();
     }
 }

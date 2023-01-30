@@ -2,6 +2,7 @@ using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Renderer))]
 public class Player : NetworkBehaviour
@@ -13,6 +14,8 @@ public class Player : NetworkBehaviour
     private Color _color;
     private bool _isRecolorInvulnerable;
     private bool _isNotInitialized = true;
+
+    public UnityAction<Player> RecoloredByPlayer;
 
     public string Name => _name;
     public Color ThisColor => _color;
@@ -33,13 +36,14 @@ public class Player : NetworkBehaviour
         }
     }
 
-    public void ApplyColor(Color color)
+    public void ApplyColor(Color color, Player player)
     {
         if (_isRecolorInvulnerable == false)
         {
             _renderer.material.color = color;
             _isRecolorInvulnerable = true;
             StartCoroutine(SetYourColorAfterDelay(_setYourColorDelay));
+            RecoloredByPlayer?.Invoke(player);
         }
     }
 

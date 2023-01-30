@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] private SpawnPoint[] _spawnPoints;
+    [SerializeField] private Transform[] _spawnPoints;
     [SerializeField] private Transform _lookAtObject;
 
     public void Spawn(Player[] players)
     {
-        List<SpawnPoint> availableSpawnPoints = _spawnPoints.ToList();
+        List<Transform> availableSpawnPoints = _spawnPoints.ToList();
 
         for (int i = 0; i < players.Length; i++)
         {
